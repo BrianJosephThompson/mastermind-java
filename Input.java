@@ -7,18 +7,29 @@ import java.util.Arrays;
 
 public class Input {
 
-    static String getInput() {
+    public String getInput() {
         String entry = null;
-        try {
-            BufferedReader is = new BufferedReader(new InputStreamReader(System.in));
-            entry = is.readLine();
-        } catch (IOException e) {
-            System.out.println("IOException: " + e);
+        boolean correctEntry = false;
+        while (!correctEntry) {
+            try {
+                BufferedReader is = new BufferedReader(new InputStreamReader(System.in));
+                entry = is.readLine();
+                int inputTest = Integer.parseInt(entry);
+                if (entry.length() != 4 ) {
+                    System.out.println("invalid input");
+                } else {
+                    correctEntry = true;
+                }
+            } catch (IOException e) {
+                System.out.println("invalid input");
+            } catch (NumberFormatException e) {
+                System.out.println("invalid input");
+            } 
         }
         return entry;
     }
 
-    static int[] convertArray(String entry)
+    public int[] convertArray(String entry)
     {
         String[] entryArray = entry.split("");
         int[] integerArray = new int[entryArray.length];
