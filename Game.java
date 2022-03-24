@@ -1,12 +1,6 @@
 package com.github.brianjosephthompson.mastermind;
 
-import java.io.*;
-
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.Objects;
 
 public class Game {
 
@@ -37,9 +31,13 @@ public class Game {
             currentGuess = input.convertArray(input.getInput());
             currentGuess = checkWellPlaced(currentGuess);
             checkMisplaced(currentGuess);
+            if (getWellPlacedPieces() == 4) {
+                System.out.println("Congratulations! you won!");
+                break;
+            }
             currentRound++;
         }
- 
+        if (currentRound == setup.getAttempts()) System.out.println("Better Luck Next Time!");
     }
 
     public int[] checkWellPlaced(int[] guess) {
@@ -57,9 +55,7 @@ public class Game {
         }
         setWellPlacedPieces(wellPlacedTemp);
         setCodeCopy(codeCopyTemp);
-        System.out.println("Guess Array = " + Arrays.toString(guess));
-        System.out.println("Code Array = " + Arrays.toString(codeCopyTemp));
-        System.out.println(wellPlacedTemp);
+        System.out.println("Well Placed Pieces: " + wellPlacedTemp);
         return guess;
     }
 
@@ -67,8 +63,6 @@ public class Game {
         int i = 0;
         int misplacedTemp = 0;
         int[] codeCopyTemp = getCodeCopy();
-        System.out.println("Guess Array = " + Arrays.toString(guess));
-        System.out.println("Code Array = " + Arrays.toString(codeCopyTemp));
         while (i < 4 - getWellPlacedPieces()) {
             int j = 0;
             while (j < 4 - getWellPlacedPieces()) {
@@ -81,8 +75,9 @@ public class Game {
             i++;
         }
         setMisplacedPieces(misplacedTemp);
-        System.out.println(misplacedTemp);
+        System.out.println("Misplaced Pieces: " + misplacedTemp);
     }
+
 
 
     public static int[] removeArrayElement(int[] arr, int index)
@@ -90,7 +85,6 @@ public class Game {
         if (arr == null
             || index < 0
             || index >= arr.length) {
- 
             return arr;
         }
  
@@ -101,9 +95,6 @@ public class Game {
                         arr.length - index - 1);
         return anotherArray;
     }
-
-
-    
 
     public static void main(String args[]) {
         savedArgs = args;
